@@ -1,7 +1,28 @@
 <script setup>
 import { useScroll } from '@vueuse/core'
+import { useCategoryStore } from '@/stores/category';
+
 //这里是基于窗口来进行滚动，因此是window，然后我们只需要关注他的y即上下距离即可
 const {y} =  useScroll(window)
+//使用pinia中的数据
+
+const categoryStore =  useCategoryStore()
+
+/*  这里已经在pinia中实现了，因此都不需要了
+const categoryList = ref([])
+const getCategory = async()=>{
+  //这样封装到一个函数里，方便我们后面如果在发送请求时，需要在请求前做写什么，可以在这里做
+  const res = await getCategoryAPI()
+  console.log(res);
+  //给这个list赋值
+  categoryList.value = res.result
+  //如果在请求后想做什么，就在这里做
+}
+//然后在这里面发起调用
+onMounted(()=>{
+  getCategory()
+})
+*/
 </script>
 
 <template>
@@ -13,32 +34,8 @@ const {y} =  useScroll(window)
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li>
-          <RouterLink to="/">居家</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">美食</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">服饰</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">母婴</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">个护</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">严选</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">数码</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">运动</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">杂项</RouterLink>
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
 

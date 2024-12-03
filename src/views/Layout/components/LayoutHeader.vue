@@ -2,6 +2,13 @@
 import {getCategoryAPI} from '@/apis/layout'
 import { onMounted,ref } from 'vue';
 
+//使用pinia中的数据
+import { useCategoryStore } from '@/stores/category';
+
+const categoryStore = useCategoryStore()
+
+
+/*  使用pinia中的数据
 const categoryList = ref([])
 const getCategory = async()=>{
   //这样封装到一个函数里，方便我们后面如果在发送请求时，需要在请求前做写什么，可以在这里做
@@ -15,6 +22,7 @@ const getCategory = async()=>{
 onMounted(()=>{
   getCategory()
 })
+  */
 </script>
 
 <template>
@@ -24,7 +32,10 @@ onMounted(()=>{
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home" v-for="item in categoryList" :key="item.id">
+        <li class="home">
+          <RouterLink to="/">首页</RouterLink>
+        </li>
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
