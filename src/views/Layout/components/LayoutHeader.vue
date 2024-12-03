@@ -7,6 +7,7 @@ const getCategory = async()=>{
   //这样封装到一个函数里，方便我们后面如果在发送请求时，需要在请求前做写什么，可以在这里做
   const res = await getCategoryAPI()
   console.log(res);
+  //给这个list赋值
   categoryList.value = res.result
   //如果在请求后想做什么，就在这里做
 }
