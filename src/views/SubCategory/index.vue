@@ -64,10 +64,6 @@ const load = async()=>{
     disabled.value = true
   }
 }
-
-
-
-
 </script>
 
 <template>
