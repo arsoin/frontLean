@@ -17,11 +17,13 @@ onMounted(()=>{
 </script>
 
 <template>
-    <!-- 二级路由出口 -->
      <LayoutFixed/>
     <LayoutNav />
     <LayoutHeader />
-    <RouterView />
+    <!-- 二级路由出口 给他添加一个第一无二的key 破坏他的复用机制，强制销毁重建 -->
+    <!-- <RouterView :key="$route.fullPath"/> -->
+     <RouterView/>
+
     <LayoutFooter />
 </template>
 

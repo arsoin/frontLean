@@ -1,46 +1,13 @@
 <script setup>
-import {getCategoryAPI} from '@/apis/category'
-import { onMounted ,onUpdated,ref, watch} from 'vue';
-import { useRoute } from 'vue-router';
-import {getBannerAPI} from '@/apis/home'
+
 import GoodsItem from '../Home/components/GoodsItem.vue';
+import {useBanner} from '@/views/Category/composables/useBanner'
+import {useCategory} from '@/views/Category/composables/useCategory'
 
-//获取数据
-const categoryDate = ref({})
-//通过路由来获取到参数
-const route = useRoute()
-//获取路由参数
-const getCategory = async(id)=>{
-  const res = await getCategoryAPI(route.params.id)
-  categoryDate.value = res.result
-}
-// onMounted(()=>{
-//   getCategory(route.params.id)
-// })
-
-//这里用 onupdate或者 watch 都可以，但是不能用onMonted因为组件已经存在了
-// onUpdated(()=>{
-//   getCategory(route.params.id)
-// })
-
-//或者这里用watch
-watch(route,()=>{
-  getCategory()
-})
-
+//获取分类
+const {categoryDate} =  useCategory()
 //获取banner
-const bannerList = ref([])
-const getBanner = async()=>{
-  const res =  await getBannerAPI({
-    distibutionSite:'2'
-  })
-  console.log(res);
-  bannerList.value = res.result
-}
-onMounted(()=> {
-  getBanner()
-})
-
+const {bannerList} =  useBanner()
 </script>
 
 <template>
@@ -67,7 +34,7 @@ onMounted(()=> {
             <h3>全部分类</h3>
             <ul>
               <li v-for="i in categoryDate.children" :key="i.id">
-                <RouterLink to="/">
+                <RouterLink :to="`/category/sub/${i.id}`">
                   <img :src="i.picture" />
                   <p>{{ i.name }}</p>
                 </RouterLink>
