@@ -2,6 +2,8 @@
 import {getCategoryAPI} from '@/apis/category'
 import { onMounted ,onUpdated,ref, watch} from 'vue';
 import { useRoute } from 'vue-router';
+import {getBannerAPI} from '@/apis/home'
+import GoodsItem from '../Home/components/GoodsItem.vue';
 
 //获取数据
 const categoryDate = ref({})
@@ -26,6 +28,19 @@ watch(route,()=>{
   getCategory()
 })
 
+//获取banner
+const bannerList = ref([])
+const getBanner = async()=>{
+  const res =  await getBannerAPI({
+    distibutionSite:'2'
+  })
+  console.log(res);
+  bannerList.value = res.result
+}
+onMounted(()=> {
+  getBanner()
+})
+
 </script>
 
 <template>
@@ -40,6 +55,33 @@ watch(route,()=>{
           <el-breadcrumb-item>{{ categoryDate.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+        <div class="home-banner">
+          <el-carousel height="500px">
+            <el-carousel-item v-for="item in bannerList" :key="item.id">
+              <img :src="item.imgUrl" alt="">
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      <!-- 轮播图 -->
+          <div class="sub-list">
+            <h3>全部分类</h3>
+            <ul>
+              <li v-for="i in categoryDate.children" :key="i.id">
+                <RouterLink to="/">
+                  <img :src="i.picture" />
+                  <p>{{ i.name }}</p>
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
+          <div class="ref-goods" v-for="item in categoryDate.children" :key="item.id">
+            <div class="head">
+              <h3>- {{ item.name }}-</h3>
+            </div>
+            <div class="body">
+              <GoodsItem v-for="goods in item.goods" :goods="goods" :key="goods.id" />
+            </div>
+          </div>
     </div>
   </div>
 </template>
@@ -121,6 +163,20 @@ watch(route,()=>{
 
   .bread-container {
     padding: 25px 0;
+  }
+}
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  // position: absolute;
+  // left: 0;
+  // top: 0;
+  margin: 0 auto;
+  z-index: 98;
+
+  img {
+    width: 100%;
+    height: 500px;
   }
 }
 </style>

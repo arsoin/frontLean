@@ -2,10 +2,16 @@ import HttpInstance from "@/utils/http";
 
 
 //获取banner
-export function getBannerAPI(){
+//之前没有参数，是因为在首页，现在需要分类页也能轮播，因此需要加上一些参数
+export function getBannerAPI(params = {}){
+  // 默认为1  商品分类为2  , 这里的传参方式就是 js中的 对象解构
+  const {distibutionSite = '1'} = params
   return HttpInstance({
     method:'get',
-    url :'/home/banner'
+    url :'/home/banner',
+    params :{
+      distibutionSite
+    }
   })
 }
 
