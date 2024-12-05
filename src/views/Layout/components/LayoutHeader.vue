@@ -5,6 +5,9 @@ import { onMounted,ref } from 'vue';
 //使用pinia中的数据
 import { useCategoryStore } from '@/stores/category';
 
+//导入购物车的组件
+import HeaderCart from './HeaderCart.vue';
+
 const categoryStore = useCategoryStore()
 
 
@@ -44,6 +47,8 @@ onMounted(()=>{
         <input type="text" placeholder="搜一搜">
       </div>
       <!-- 头部购物车 -->
+       <HeaderCart/>
+
 
     </div>
   </header>
