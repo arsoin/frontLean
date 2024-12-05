@@ -6,7 +6,8 @@ import { useRoute } from 'vue-router';
 //设置一个props参数 适配不同的title和数据
 const props =  defineProps({
   hotType:{
-    type:Number
+    type:Number,
+    default:1
   }
 })
 
@@ -17,8 +18,6 @@ const TYPEMAP = {
 }
 // 这里的中括号是指 key
 const title =  computed(()=> TYPEMAP[props.hotType])
-
-
 
 //以24小时热榜为例子，来获取数据，然后渲染
 //1 封装接口
