@@ -12,9 +12,13 @@ export const useUserStore =  defineStore('user',()=>{
     const res = await LoginAPI({account,password})
     userInfo.value= res.result
   }
+
+
   //以对象的格式吧 这两个给return 出去，这样就能用了
   return{
     userInfo,
     getUserInfo,
   }
+},{
+  persist: true,
 })
